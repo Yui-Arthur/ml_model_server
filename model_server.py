@@ -47,7 +47,8 @@ class send_to_model(model_server_pb2_grpc.sendToModelServicer):
             context.abort(grpc.StatusCode.NOT_FOUND, "Model is loadding , try again")
         else:
             model_state[model_name]['last_used'] = time.perf_counter()
-            communicate_model(model_name , user , prompt)
+            response = communicate_model(model_name , user , prompt)
+            return response
         # return  modelResponse(prompt = "1234" , response = "3467")
     
 model_state =   {
@@ -60,7 +61,7 @@ model_state =   {
                 }
 
 expire_time = 35 * 60
-expire_time = 5
+# expire_time = 5
 
 
 def serve():
