@@ -1,4 +1,5 @@
 from multiprocessing.connection import Listener
+from model_server_pb2 import ( modelRequest , modelResponse )
 
 address = ('localhost', 9001)   
 
@@ -12,7 +13,7 @@ with Listener(address, authkey=b'1234') as listener:
             conn.send("ok")
             break
         
-        conn.send("ans")
+        conn.send(modelResponse(prompt = "yes" , response = "no"))
         conn.close()
         # print('connection accepted from', listener.last_accepted)
 

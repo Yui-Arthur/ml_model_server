@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+message modelRequest {
+    int32 user = 1;
+    string modelName = 2;
+    string prompt = 3;
+}
+
+message modelResponse {
+    string prompt = 1;
+    string response = 2;
+}
+
+service sendToModel {
+    rpc getModelResponse (modelRequest) returns (modelResponse);
+}
