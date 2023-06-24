@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+message modelRequest {
+    int32 user = 1;
+    string modelName = 2;
+    string prompt = 3;
+}
+
+message modelResponse {
+    string prompt = 1;
+    string response = 2;
+    float executionTime = 3;
+}
+
+message modelName {
+    string modelName = 1;
+}
+
+message modelConfig {
+    string modelName = 1;
+    int32 maxToken = 2;
+}
+
+message modelInfo {
+    string modelInfo = 1;
+}
+
+message empty {
+}
+
+
+
+service sendToModel {
+    rpc getModelResponse (modelRequest) returns (modelResponse);
+    rpc deleteModelProc (modelName) returns (modelInfo);
+    rpc checkModelState (modelName) returns (modelInfo);
+    rpc createModelProc (modelConfig) returns (modelInfo);
+}
