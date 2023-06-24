@@ -3,7 +3,7 @@ var protoLoader = require('@grpc/proto-loader');
 const protoFile = 'proto/model_server.proto';
 const packageDefinitionProc = protoLoader.loadSync(protoFile);
 const processingProto = grpc.loadPackageDefinition(packageDefinitionProc);
-var client = new processingProto.sendToModel('localhost:50051', grpc.credentials.createInsecure())
+var client = new processingProto.sendToModel('llm_server:50051', grpc.credentials.createInsecure())
 
 const checkModel = async (req, res) => {
 
