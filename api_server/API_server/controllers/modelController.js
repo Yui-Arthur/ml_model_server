@@ -12,6 +12,7 @@ const checkModel = async (req, res) => {
     console.log(req.params.modelName);
     client.checkModelState({modelName:modelName} , function(err , response){
         if(err){
+            console.log(err);
             res.status(400).send("error");
         }
         else{
@@ -27,6 +28,7 @@ const createModel = async (req, res) => {
     let maxToken = req.params.maxToken;
     client.createModelProc({modelName:modelName, maxToken:maxToken} , function(err , response){
         if(err){
+            console.log(err);
             res.status(400).send("error")
         }
         else{
@@ -41,6 +43,7 @@ const deleteModel = async (req, res) => {
     let modelName = req.params.modelName;
     client.deleteModelProc({modelName:modelName} , function(err , response){
         if(err){
+            console.log(err);
             res.status(400).send("error")
         }
         else{
@@ -58,6 +61,7 @@ const getModel = async (req, res) => {
     
     client.getModelResponse({user: user, modelName: modelName, prompt: prompt} , function(err , response){
         if(err){
+            console.log(err);
             res.status(400).send("error")
         }
         else{
