@@ -17,9 +17,10 @@ def create_model_proc(model_name , max_token = 150):
 def delete_model_proc(model_name):
     try:
         conn = Client(('localhost' , model_state[model_name]['port']) , authkey=b'1234')
-        conn.send('del')
+        conn.send(('del' , 'del'))
         print(conn.recv())
         conn.close()
+        model_state[model_name]['state'] = 0
     except:
         model_state[model_name]['state'] = 0
 
@@ -90,8 +91,8 @@ class send_to_model(model_server_pb2_grpc.sendToModelServicer):
         model_name = request.modelName
         max_token = request.maxToken
         
-        if model_name not in model_state:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Model not found")
+        if model_name not in model_state or  model_state[model_name]['state'] == 1:
+            context.abort(grpc.StatusCode.NOT_FOUND, "Model not found or model is already running")
 
         print(model_name , max_token)        
         create_model_proc(model_name) 

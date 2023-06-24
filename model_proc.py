@@ -26,7 +26,8 @@ class vicuna:
         if user not in self.user_record.keys():
             self.user_record[user] = ""
         
-        prompt_format = self.user_record[user] + f"### Human: {prompt} \n### Assistant:"
+        prompt_format = self.user_record[user] + f"""HUMAN: {prompt}
+ASSISTANT:"""
 
         response = self.pipeline(prompt_format)[0]["generated_text"]
 
