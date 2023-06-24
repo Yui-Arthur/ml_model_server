@@ -1,11 +1,12 @@
 from multiprocessing.connection import Listener
 from model_server_pb2 import ( modelRequest , modelResponse )
+import argparse
 
 address = ('localhost', 9001)   
 
 
 class vicuna:
-    def __init__(self):
+    def __init__(self , max_token = 150):
         from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
         from transformers import AutoTokenizer, logging, pipeline
         from transformers import TextGenerationPipeline
@@ -17,30 +18,44 @@ class vicuna:
 
         tokenizer = AutoTokenizer.from_pretrained(model_id, use_fast=True)
 
-        self.pipeline = TextGenerationPipeline(model=model, tokenizer=tokenizer, device="cuda:0" , max_new_tokens = 20)
+        self.pipeline = TextGenerationPipeline(model=model, tokenizer=tokenizer, device="cuda:0" , max_new_tokens = max_token)
+        self.user_record = {}
 
-    def generation(self , prompt):
-        prompt_format = f'''### Human: {prompt}
-### Assistant:'''
-        return self.pipeline(prompt_format)[0]["generated_text"]
+    def generation(self , user , prompt):
 
-
-model = vicuna()
-
-with Listener(address, authkey=b'1234') as listener:
-    
-    while True:
-        conn = listener.accept()
-        usr , prompt = conn.recv()
-
-        if usr == 'del':
-            conn.send("ok")
-            break
+        if user not in self.user_record.keys():
+            self.user_record[user] = ""
         
-        response = model.generation(prompt)
-        # response = "1234"
-        conn.send(modelResponse(prompt = "yes" , response = response))
-        conn.close()
-        # print('connection accepted from', listener.last_accepted)
+        prompt_format = self.user_record[user] + f"### Human: {prompt} \n### Assistant:"
 
-        #  conn.recv()
+        response = self.pipeline(prompt_format)[0]["generated_text"]
+
+        self.user_record[user] += response + "\n"
+        
+        return  response
+
+def parse_opt():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--max-tokens', nargs='?', type=int, default=150, help='max_new_tokens')
+    opt = parser.parse_args()
+    return opt
+
+if __name__ == '__main__':
+    opt = parse_opt()
+    model = vicuna(opt.max_tokens)
+
+    with Listener(address, authkey=b'1234') as listener:
+        
+        while True:
+            conn = listener.accept()
+            usr , prompt = conn.recv()
+
+            print(usr , prompt)
+            if usr == 'del':
+                conn.send("ok")
+                break
+            
+            response = model.generation(usr , prompt)
+            # response = "1234"
+            conn.send(modelResponse(prompt = prompt , response = response))
+            conn.close()

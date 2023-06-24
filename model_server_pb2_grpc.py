@@ -19,12 +19,45 @@ class sendToModelStub(object):
                 request_serializer=model__server__pb2.modelRequest.SerializeToString,
                 response_deserializer=model__server__pb2.modelResponse.FromString,
                 )
+        self.deleteModelProc = channel.unary_unary(
+                '/sendToModel/deleteModelProc',
+                request_serializer=model__server__pb2.modelName.SerializeToString,
+                response_deserializer=model__server__pb2.modelInfo.FromString,
+                )
+        self.checkModelState = channel.unary_unary(
+                '/sendToModel/checkModelState',
+                request_serializer=model__server__pb2.modelName.SerializeToString,
+                response_deserializer=model__server__pb2.modelInfo.FromString,
+                )
+        self.createModelProc = channel.unary_unary(
+                '/sendToModel/createModelProc',
+                request_serializer=model__server__pb2.modelConfig.SerializeToString,
+                response_deserializer=model__server__pb2.modelInfo.FromString,
+                )
 
 
 class sendToModelServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def getModelResponse(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def deleteModelProc(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def checkModelState(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def createModelProc(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -37,6 +70,21 @@ def add_sendToModelServicer_to_server(servicer, server):
                     servicer.getModelResponse,
                     request_deserializer=model__server__pb2.modelRequest.FromString,
                     response_serializer=model__server__pb2.modelResponse.SerializeToString,
+            ),
+            'deleteModelProc': grpc.unary_unary_rpc_method_handler(
+                    servicer.deleteModelProc,
+                    request_deserializer=model__server__pb2.modelName.FromString,
+                    response_serializer=model__server__pb2.modelInfo.SerializeToString,
+            ),
+            'checkModelState': grpc.unary_unary_rpc_method_handler(
+                    servicer.checkModelState,
+                    request_deserializer=model__server__pb2.modelName.FromString,
+                    response_serializer=model__server__pb2.modelInfo.SerializeToString,
+            ),
+            'createModelProc': grpc.unary_unary_rpc_method_handler(
+                    servicer.createModelProc,
+                    request_deserializer=model__server__pb2.modelConfig.FromString,
+                    response_serializer=model__server__pb2.modelInfo.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -62,5 +110,56 @@ class sendToModel(object):
         return grpc.experimental.unary_unary(request, target, '/sendToModel/getModelResponse',
             model__server__pb2.modelRequest.SerializeToString,
             model__server__pb2.modelResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def deleteModelProc(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/sendToModel/deleteModelProc',
+            model__server__pb2.modelName.SerializeToString,
+            model__server__pb2.modelInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def checkModelState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/sendToModel/checkModelState',
+            model__server__pb2.modelName.SerializeToString,
+            model__server__pb2.modelInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def createModelProc(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/sendToModel/createModelProc',
+            model__server__pb2.modelConfig.SerializeToString,
+            model__server__pb2.modelInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

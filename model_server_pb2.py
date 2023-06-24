@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12model_server.proto\"?\n\x0cmodelRequest\x12\x0c\n\x04user\x18\x01 \x01(\x05\x12\x11\n\tmodelName\x18\x02 \x01(\t\x12\x0e\n\x06prompt\x18\x03 \x01(\t\"1\n\rmodelResponse\x12\x0e\n\x06prompt\x18\x01 \x01(\t\x12\x10\n\x08response\x18\x02 \x01(\t2@\n\x0bsendToModel\x12\x31\n\x10getModelResponse\x12\r.modelRequest\x1a\x0e.modelResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12model_server.proto\"?\n\x0cmodelRequest\x12\x0c\n\x04user\x18\x01 \x01(\x05\x12\x11\n\tmodelName\x18\x02 \x01(\t\x12\x0e\n\x06prompt\x18\x03 \x01(\t\"H\n\rmodelResponse\x12\x0e\n\x06prompt\x18\x01 \x01(\t\x12\x10\n\x08response\x18\x02 \x01(\t\x12\x15\n\rexecutionTime\x18\x03 \x01(\x02\"\x1e\n\tmodelName\x12\x11\n\tmodelName\x18\x01 \x01(\t\"2\n\x0bmodelConfig\x12\x11\n\tmodelName\x18\x01 \x01(\t\x12\x10\n\x08maxToken\x18\x02 \x01(\x05\"\x1e\n\tmodelInfo\x12\x11\n\tmodelInfo\x18\x01 \x01(\t\"\x07\n\x05\x65mpty2\xc3\x01\n\x0bsendToModel\x12\x31\n\x10getModelResponse\x12\r.modelRequest\x1a\x0e.modelResponse\x12)\n\x0f\x64\x65leteModelProc\x12\n.modelName\x1a\n.modelInfo\x12)\n\x0f\x63heckModelState\x12\n.modelName\x1a\n.modelInfo\x12+\n\x0f\x63reateModelProc\x12\x0c.modelConfig\x1a\n.modelInfob\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -24,7 +24,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_MODELREQUEST']._serialized_start=22
   _globals['_MODELREQUEST']._serialized_end=85
   _globals['_MODELRESPONSE']._serialized_start=87
-  _globals['_MODELRESPONSE']._serialized_end=136
-  _globals['_SENDTOMODEL']._serialized_start=138
-  _globals['_SENDTOMODEL']._serialized_end=202
+  _globals['_MODELRESPONSE']._serialized_end=159
+  _globals['_MODELNAME']._serialized_start=161
+  _globals['_MODELNAME']._serialized_end=191
+  _globals['_MODELCONFIG']._serialized_start=193
+  _globals['_MODELCONFIG']._serialized_end=243
+  _globals['_MODELINFO']._serialized_start=245
+  _globals['_MODELINFO']._serialized_end=275
+  _globals['_EMPTY']._serialized_start=277
+  _globals['_EMPTY']._serialized_end=284
+  _globals['_SENDTOMODEL']._serialized_start=287
+  _globals['_SENDTOMODEL']._serialized_end=482
 # @@protoc_insertion_point(module_scope)
