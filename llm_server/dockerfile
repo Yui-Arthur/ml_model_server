@@ -1,5 +1,6 @@
 FROM python
 WORKDIR llm_server
-COPY ["./model_*.py" , "./prepare.sh" , "./"] 
+COPY ./prepare.sh ./
 RUN chmod 777 ./prepare.sh && bash ./prepare.sh
+COPY ["model_*.py" , "utils" , "./"]
 CMD ["python" , "-u", "model_server.py" ]
