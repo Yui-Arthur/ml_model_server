@@ -10,6 +10,7 @@ message modelResponse {
     string prompt = 1;
     string response = 2;
     float executionTime = 3;
+    float totalTime = 4;
 }
 
 message modelName {
@@ -19,10 +20,23 @@ message modelName {
 message modelConfig {
     string modelName = 1;
     int32 maxToken = 2;
+    bool loadUserRecord = 3;
 }
 
 message modelInfo {
     string modelInfo = 1;
+}
+
+message userRecord {
+    string userRecord = 1;
+}
+
+message queueSize {
+    string queueSize = 1;
+}
+
+message currentUser {
+    string currentUser = 1;
 }
 
 message empty {
@@ -30,9 +44,14 @@ message empty {
 
 
 
-service sendToModel {
+
+service LLMService {
     rpc getModelResponse (modelRequest) returns (modelResponse);
     rpc deleteModelProc (modelName) returns (modelInfo);
-    rpc checkModelState (modelName) returns (modelInfo);
     rpc createModelProc (modelConfig) returns (modelInfo);
+    rpc checkModelState (empty) returns (modelInfo);
+    rpc checkUSerRecord (modelName) returns (userRecord);
+    rpc showQueurSize (modelName) returns (queueSize);
+    rpc showCurrentUser (modelName) returns (currentUser);
 }
+
